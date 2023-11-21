@@ -1,0 +1,54 @@
+Ganglia Fixes to be done when error faced due to PHP version 8 Problem 
+----------------------------------------------------------------------
+Make the following changes in the files
+****************************************
+1)
+ 
+file: /usr/share/ganglia/ganglia.php
+
+Line 353 - 355 commented out this
+
+//if ( in_array($context, $SKIP_GMETAD_CONTEXTS) ) {
+// return TRUE;
+//}
+
+2)
+
+file: /usr/share/ganglia/ganglia/functions.php
+line 732 - changed 'continue' to 'break' as described in #368
+
+3)
+
+file: /usr/share/ganglia/ganglia/lib/common_api.php
+line 18: changed funciton to have only the first 4 variables.
+18 //function ganglia_api_error_handler ($no, $str, $file, $line, $context) { //old version
+19 function ganglia_api_error_handler ($no, $str, $file, $line) {
+
+4) 
+
+# vim /etc/ganglia/gmetad.conf
+
+Add the following line with localhost in place of mgmt node ip in gmetad.conf
+
+data_source "PARAM Himalaya" localhost
+
+5) restart the service of gmetad in mgmt node  
+    # systemctl restart gmetad
+
+
+Additional fixes   (Link to follow : https://stackoverflow.com/questions/66388326/phpunit-php-fatal-error-uncaught-error-call-to-undefined-function-each)
+----------------
+Check for the error log file 
+>> vi /var/log/httpd/error_log
+
+$ vi /usr/share/ganglia/dwoo/plugins/builtin/blocks/if.php -> on line 41 change while loop with foreach loop
+ //while (list($k,$v) = each($params)) {
+                foreach ($params as $k => $v) {
+$ vi /usr/share/ganglia/dwoo/Dwoo/Compiler.php  -> On line 3044 change while loop with foreach loop
+//while (list($k,$v) = each($map)) {
+                foreach ($map as $k => $v) {
+$ vi  /usr/share/ganglia/cluster_view.php      -> On line 617 change LOCALTIME to 'LOCALTIME'
+
+
+
+

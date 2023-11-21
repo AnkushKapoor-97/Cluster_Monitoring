@@ -87,7 +87,7 @@ udp_send_channel {
                        # interface and the DNS names associated with
                        # those IPs will be used to create the RRDs.
   # mcast_join = 239.2.11.71
-  host = master
+  host = master or master ip 
   port = 8649
   ttl = 1
 }
@@ -186,3 +186,8 @@ Alias /ganglia /usr/share/ganglia-ohpc
   # Require ip 10.1.2.3
   # Require host example.org
 </Location>
+
+
+_____________________________________________________________________
+
+Video Link from Youtube: https://www.youtube.com/watch?v=tjHBYp649Ps&t=16s
